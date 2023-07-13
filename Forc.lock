@@ -3,9 +3,17 @@ name = 'core'
 source = 'path+from-root-9BFE6D5D0CBDF740'
 
 [[package]]
+name = 'nft'
+source = 'git+https://github.com/FuelLabs/sway-libs?default-branch#14139407704840d45d7eba9b2fa040b1b430b3a9'
+dependencies = ['std']
+
+[[package]]
 name = 'saprana'
 source = 'member'
-dependencies = ['std']
+dependencies = [
+    'nft',
+    'std',
+]
 
 [[package]]
 name = 'std'

@@ -5,4 +5,5 @@ license = "Apache-2.0"
 name = "saprana"
 
 [dependencies]
-# nft = { git = "https://github.com/FuelLabs/sway-libs"}
+nft = { git = "https://github.com/FuelLabs/sway-libs"}
+

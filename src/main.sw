@@ -6,7 +6,8 @@ use std::call_frames::msg_asset_id; // get attached asset id func
 use std::context::msg_amount; // get attached asset amount func
 use std::token::transfer_to_address;
 use std::block::timestamp;
-// use std::sway_libs::nft::{mint, owner_of};
+use nft::{approve, mint, owner_of, transfer,};
+
 //todo add description and image
 struct Event {
     id: u64,
@@ -23,7 +24,8 @@ struct Event {
 
 configurable {
     ADMIN: Address = Address::from(ZERO_B256),
-    PROTOCOL_FEE: u64 = 10_000_000, //0.01 ETH
+    PROTOCOL_OWNER_FEE: u64 = 10_000_000, //0.01 ETH
+    PROTOCOL_GUEST_FEE: u64 = 10_000_000, //0.01 ETH
 }
 
 storage {
@@ -36,7 +38,7 @@ abi NFTTicketingContract {
     fn verify(event_id: u64, nft_id: u64) -> bool;
 
     #[storage(read, write)]
-    fn create_event(name: str[50]/*, description: str[1000], image: str[500]*/, max_participantes: u64, event_date: u64, ticket_price: u64);
+    fn create_event(name: str[50], /*description: str[1000], image: str[500],*/ max_participantes: u64, event_date: u64, ticket_price: u64);
     #[storage(read, write)]
     fn buy_ticket(event_id: u64);
     fn claim(event_id: u64);
@@ -56,12 +58,8 @@ impl NFTTicketingContract for Contract {
 
     #[storage(read, write)]
     fn create_event(name: str[50], max_participantes: u64, event_date: u64, ticket_price: u64){
-        // не давать создавать заказ если админ равен Address::from(ZERO_B256)
-        // if ADMIN == Address::from(ZERO_B256){
-        //     revert("Admin is not defined");
-        // }
-        assert(ADMIN != Address::from(ZERO_B256));
         
+        assert(ADMIN != Address::from(ZERO_B256)); // не давать создавать заказ если админ равен Address::from(ZERO_B256)
         // owner - чувак, который создает ивент
         let owner: Identity = msg_sender().unwrap();
         let owner: Address = match owner {
@@ -69,10 +67,10 @@ impl NFTTicketingContract for Contract {
             _ => revert(0),
         };
         
-        // Берем комиссию за создание 0.01 ETH у owner
+        // Берем комиссию 0.01 ETH у owner
         let protocol_fee_asset_id: b256 = msg_asset_id().into();
         let protocol_fee_amount = msg_amount();
-        assert(protocol_fee_asset_id == ZERO_B256 && protocol_fee_amount >= PROTOCOL_FEE);
+        assert(protocol_fee_asset_id == ZERO_B256 && protocol_fee_amount >= PROTOCOL_OWNER_FEE);
         
         // отправляем комиссию на адрес ADMIN
         transfer_to_address(protocol_fee_amount, AssetId::from(protocol_fee_asset_id), ADMIN);
@@ -87,7 +85,7 @@ impl NFTTicketingContract for Contract {
             ticket_price,
             owner,
             tickets_sold: 0,
-            balance: 0,
+            balance: 0
         };
 
         // добавляем его в сторадж
@@ -96,14 +94,25 @@ impl NFTTicketingContract for Contract {
     }
     
     #[storage(read, write)]
-    fn buy_ticket(event_index: u64){
+    fn buy_ticket(/*event_index: u64*/ id: u64){
         //достаем ивент из storage.events по event_index
+        let x: u64 = storage.events.id;
+        let get_event: u64 = storage.events.get(x);
+
         //проверяем что денег достаточно для покупки билета и валюта ETH
+        let protocol_fee_asset_id: b256 = msg_asset_id().into();
+        let protocol_fee_amount = msg_amount();
+        assert(protocol_fee_asset_id == ZERO_B256 && protocol_fee_amount >= PROTOCOL_GUEST_FEE);
+
         //проверяем что event_date > timestamp()
+        assert(protocol_fee_asset_id == ZERO_B256 && protocol_fee_amount >= PROTOCOL_GUEST_FEE);
+
         //проверяем что tickets_sold < max_participantes 
+       // assert(storage.events. == ZERO_B256 && protocol_fee_amount >= PROTOCOL_GUEST_FEE);
         //минтим билет на адрес того кто вызвал функцию buy_ticket
+
         //увеличиваем баланс владельца ивента
-        //увеличиваем tickets_sold
+
     }
 
     fn claim(event_id: u64){
