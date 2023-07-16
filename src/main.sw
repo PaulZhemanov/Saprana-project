@@ -23,10 +23,17 @@ struct Event {
     //guests: 
 }
 
+enum Error {
+    AddressAlreadyMint: (),
+    //CannotReinitialize: (),
+    MintIsClosed: (),
+    NotOwner: (),
+    SorryButSoldOut: ()
+}
+
 configurable {
     ADMIN: Address = Address::from(ZERO_B256),
     PROTOCOL_OWNER_FEE: u64 = 10_000_000, //0.01 ETH
-    PROTOCOL_BUYER_FEE: u64 = 5_000_000, //0.005 ETH
 }
 
 storage {
@@ -110,15 +117,15 @@ impl NFTTicketingContract for Contract {
             _ => revert(0),
         };
         
-        let peyment_asset_id: b256 = msg_asset_id().into();
+        let payment_asset_id: b256 = msg_asset_id().into();
         let payment_amount = msg_amount();
-        assert(peyment_asset_id == ZERO_B256 && payment_amount == event.ticket_price);
+        assert(payment_asset_id == ZERO_B256 && payment_amount == event.ticket_price);
 
         //проверяем что deadline > timestamp()
-        assert(event.deadline >= timestamp());
+        require(event.deadline >= timestamp(), Error::MintIsClosed);
 
         //проверяем что tickets_sold < max_participantes 
-        assert(event.tickets_sold < event.max_participantes);
+        require(event.tickets_sold < event.max_participantes, Error::SorryButSoldOut);
 
         //todo
         //минтим билет на адрес того кто вызвал функцию buy_ticket
@@ -136,7 +143,7 @@ impl NFTTicketingContract for Contract {
     fn claim(id: u64){
         let mut event = storage.events.get(id).read();
         let caller: Identity = msg_sender().unwrap();
-        assert(caller == Identity::Address(event.owner));//todo use require to show an error message
+        require(caller == Identity::Address(event.owner), Error::NotOwner);//todo use require to show an error message
         assert(event.balance > 0);
         transfer_to_address(event.balance, AssetId::from(ZERO_B256), event.owner);
         event.balance = 0;
