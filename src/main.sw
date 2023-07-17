@@ -1,12 +1,17 @@
 contract;
 
+mod interface;
+
+use interface::NFTTicketingContract;
+
 use std::constants::ZERO_B256;
 use std::storage::storage_vec::*;
 use std::call_frames::msg_asset_id; // get attached asset id func
 use std::context::msg_amount; // get attached asset amount func
 use std::token::transfer_to_address;
 use std::block::timestamp;
-use nft::{mint, owner_of};
+use nft::{mint, transfer,owner_of};
+
 
 //todo add description and image
 struct Event {
@@ -38,23 +43,10 @@ configurable {
 
 storage {
     events: StorageMap<u64, Event> = StorageMap {},
-    //events: StorageMap<u64, StorageMap<u64, Event>> = StorageMap {},
     total_events_count: u64 = 0
 }
 
-abi NFTTicketingContract {
-    #[storage(read)]
-    fn verify(event_id: u64, nft_id: u64) -> bool;
 
-    #[storage(read, write)]
-    fn create_event(name: str[50], /*description: str[1000], image: str[500],*/ max_participantes: u64, deadline: u64, ticket_price: u64);
-    
-    #[storage(read, write)]
-    fn buy_ticket(event_id: u64);
-    
-    #[storage(read, write)]
-    fn claim(event_id: u64);
-}
 //configurable block
 //https://fuellabs.github.io/sway/v0.42.0/book/basics/constants.html
 //https://rust.fuel.network/v0.42.0/contracts/configurable-constants.html
@@ -110,13 +102,13 @@ impl NFTTicketingContract for Contract {
         //достаем ивент из storage.events по id
         let mut event = storage.events.get(id).read();
 
-        //проверяем что денег достаточно для покупки билета и валюта ETH
         let buyer: Identity = msg_sender().unwrap();
         let buyer: Address = match buyer {
             Identity::Address(identity) => identity,
             _ => revert(0),
         };
         
+        //проверяем что денег достаточно для покупки билета и валюта ETH
         let payment_asset_id: b256 = msg_asset_id().into();
         let payment_amount = msg_amount();
         assert(payment_asset_id == ZERO_B256 && payment_amount == event.ticket_price);
@@ -129,9 +121,12 @@ impl NFTTicketingContract for Contract {
 
         //todo
         //минтим билет на адрес того кто вызвал функцию buy_ticket
-        //mint();
-        //transfer_to_address(1, nft_asset_id, buyer);
 
+
+        let buyer = msg_sender().unwrap();
+        let token_id = 1;
+        mint(token_id, buyer);
+        transfer(buyer, token_id);
 
         //увеличиваем баланс владельца ивента
         event.tickets_sold += 1;
@@ -143,16 +138,17 @@ impl NFTTicketingContract for Contract {
     fn claim(id: u64){
         let mut event = storage.events.get(id).read();
         let caller: Identity = msg_sender().unwrap();
-        require(caller == Identity::Address(event.owner), Error::NotOwner);//todo use require to show an error message
+        require(caller == Identity::Address(event.owner), Error::NotOwner);
         assert(event.balance > 0);
         transfer_to_address(event.balance, AssetId::from(ZERO_B256), event.owner);
         event.balance = 0;
         storage.events.insert(id, event);
     }
     
-    #[storage(read)]
-    fn verify(event_id: u64, nft_id: u64) -> bool{
-        false
-    }
+    // #[storage(read)]
+    // fn verify(event_id: u64, token_id: u64) -> bool {
+    //     let buyer_check = owner_of(token_id).unwrap();
+    // }
   
 }
+
