@@ -6,37 +6,28 @@ abigen!(Contract(
     abi = "out/debug/saprana-abi.json"
 ));
 
-async fn get_contract_instance() -> (MyContract<WalletUnlocked>, ContractId) {
-    // Launch a local network and deploy the contract
-    let mut wallets = launch_custom_provider_and_get_wallets(
-        WalletsConfig::new(
-            Some(1),             /* Single wallet */
-            Some(1),             /* Single coin (UTXO) */
-            Some(1_000_000_000), /* Amount per coin */
-        ),
-        None,
-        None,
-    )
-    .await;
-    let wallet = wallets.pop().unwrap();
-
-    let id = Contract::load_from(
-        "./out/debug/saprana.bin",
-        LoadConfiguration::default(),
-    )
-    .unwrap()
-    .deploy(&wallet, TxParameters::default())
-    .await
-    .unwrap();
-
-    let instance = MyContract::new(id.clone(), wallet);
-
-    (instance, id.into())
-}
 
 #[tokio::test]
-async fn can_get_contract_id() {
-    let (_instance, _id) = get_contract_instance().await;
+async fn main_test() {
+    let config = WalletsConfig::new(Some(7), Some(1), Some(1_000_000_000));
+    let mut wallets: Vec<WalletUnlocked> =
+        launch_custom_provider_and_get_wallets(config, None, None).await;
+    let admin = &wallets[0];
+    let event_maker = &wallets[1];
+    let buyer0 = &wallets[2];
+    let buyer1 = &wallets[3];
+    let buyer2 = &wallets[4];
+    let buyer3 = &wallets[6];
+    let buyer4 = &wallets[6];
 
-    // Now you have an instance of your contract you can use to test each function
+    let id = Contract::load_from("./out/debug/saprana.bin", LoadConfiguration::default())
+        .unwrap()
+        .deploy(admin, TxParameters::default())
+        .await
+        .unwrap();
+
+    let instance = MyContract::new(id.clone(), admin.clone());
+    // instance.create_event
+    //
+    //
 }

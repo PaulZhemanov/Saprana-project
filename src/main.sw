@@ -149,6 +149,15 @@ impl NFTTicketingContract for Contract {
     // fn verify(event_id: u64, token_id: u64) -> bool {
     //     let buyer_check = owner_of(token_id).unwrap();
     // }
+    #[storage(read)]
+    fn log_values(){
+        // Generates a Log receipt
+       log(42);
+
+         // Generates a LogData receipt
+        let string = "sway";
+        log(string);
+    }
   
 }
 

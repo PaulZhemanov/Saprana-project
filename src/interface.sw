@@ -12,4 +12,6 @@ abi NFTTicketingContract {
     
     // #[storage(read)]
     // fn verify(event_id: u64, nft_id: u64) -> bool;
+    #[storage(read)]
+    fn log_values();
 }
