@@ -1,18 +1,29 @@
 contract;
 
-mod interface;
-
-use interface::NFTTicketingContract;
-
 use std::constants::ZERO_B256;
 use std::storage::storage_vec::*;
 use std::call_frames::msg_asset_id; // get attached asset id func
 use std::context::msg_amount; // get attached asset amount func
 use std::token::transfer_to_address;
 use std::block::timestamp;
-use nft::{mint, transfer,owner_of};
+use nft::{mint, transfer, owner_of};
 
+abi NFTTicketingContract {
+    #[storage(read, write), payable]
+    fn create_event(name: str[50], /*description: str[1000], image: str[500],*/ max_participantes: u64, deadline: u64, ticket_price: u64) -> u64;
+    
+    #[storage(read, write)]
+    fn buy_ticket(event_id: u64);
+    
+    #[storage(read, write)]
+    fn claim(event_id: u64);
+    
+    #[storage(read)]
+    fn verify(event_id: u64, nft_id: u64) -> bool;
 
+    #[storage(read)]
+    fn get_event(id: u64) -> Event;
+}
 //todo add description and image
 struct Event {
     id: u64,
@@ -60,8 +71,8 @@ storage {
 
 impl NFTTicketingContract for Contract {
 
-    #[storage(read, write)]
-    fn create_event(name: str[50], max_participantes: u64, deadline: u64, ticket_price: u64){
+    #[storage(read, write), payable]
+    fn create_event(name: str[50], max_participantes: u64, deadline: u64, ticket_price: u64)-> u64 {
         
         assert(ADMIN != Address::from(ZERO_B256)); // не давать создавать заказ если админ равен Address::from(ZERO_B256)
         // owner - чувак, который создает ивент
@@ -80,7 +91,7 @@ impl NFTTicketingContract for Contract {
         transfer_to_address(protocol_fee_amount, AssetId::from(protocol_fee_asset_id), ADMIN);
 
         // создаем экземпляр ивента
-        let id = storage.total_events_count.read();
+        let id = storage.total_events_count.try_read().unwrap_or(0);
         let new_event_instance = Event {
             id,
             owner,
@@ -95,6 +106,7 @@ impl NFTTicketingContract for Contract {
         // добавляем его в сторадж
         storage.events.insert(id, new_event_instance);
         storage.total_events_count.write(id + 1);
+        return id;
     }
     
     #[storage(read, write)]
@@ -145,19 +157,18 @@ impl NFTTicketingContract for Contract {
         storage.events.insert(id, event);
     }
     
-    // #[storage(read)]
-    // fn verify(event_id: u64, token_id: u64) -> bool {
-    //     let buyer_check = owner_of(token_id).unwrap();
-    // }
     #[storage(read)]
-    fn log_values(){
-        // Generates a Log receipt
-       log(42);
-
-         // Generates a LogData receipt
-        let string = "sway";
-        log(string);
+    fn verify(event_id: u64, token_id: u64) -> bool {//todo
+        let buyer_check = owner_of(token_id).unwrap();
+        //return buyer_check;
+        false
     }
   
+    #[storage(read)]
+    fn get_event(id: u64) -> Event {
+        storage.events.get(id).read()
+    }
+
+
 }
 
