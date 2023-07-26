@@ -2965,6 +2965,7 @@ name = "saprana"
 version = "0.1.0"
 dependencies = [
  "fuels",
+ "tai64",
  "tokio",
 ]
 

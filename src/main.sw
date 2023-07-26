@@ -12,7 +12,7 @@ abi NFTTicketingContract {
     #[storage(read, write), payable]
     fn create_event(name: str[50], /*description: str[1000], image: str[500],*/ max_participantes: u64, deadline: u64, ticket_price: u64) -> u64;
     
-    #[storage(read, write)]
+    #[storage(read, write), payable]
     fn buy_ticket(event_id: u64);
     
     #[storage(read, write)]
@@ -57,25 +57,12 @@ storage {
     total_events_count: u64 = 0
 }
 
-
-//configurable block
-//https://fuellabs.github.io/sway/v0.42.0/book/basics/constants.html
-//https://rust.fuel.network/v0.42.0/contracts/configurable-constants.html
-//logs
-//https://fuellabs.github.io/sway/v0.42.0/book/basics/comments_and_logging.html
-//https://rust.fuel.network/v0.42.0/calling-contracts/logs.html
-//identity
-//https://fuellabs.github.io/sway/v0.42.0/book/basics/blockchain_types.html
-//match
-//https://fuellabs.github.io/sway/v0.42.0/book/basics/control_flow.html?highlight=match#match-expressions
-
 impl NFTTicketingContract for Contract {
 
     #[storage(read, write), payable]
     fn create_event(name: str[50], max_participantes: u64, deadline: u64, ticket_price: u64)-> u64 {
         
         assert(ADMIN != Address::from(ZERO_B256)); // не давать создавать заказ если админ равен Address::from(ZERO_B256)
-        // owner - чувак, который создает ивент
         let owner: Identity = msg_sender().unwrap();
         let owner: Address = match owner {
             Identity::Address(identity) => identity,
@@ -109,7 +96,7 @@ impl NFTTicketingContract for Contract {
         return id;
     }
     
-    #[storage(read, write)]
+    #[storage(read, write), payable]
     fn buy_ticket(id: u64){
         //достаем ивент из storage.events по id
         let mut event = storage.events.get(id).read();
@@ -119,7 +106,7 @@ impl NFTTicketingContract for Contract {
             Identity::Address(identity) => identity,
             _ => revert(0),
         };
-        
+       
         //проверяем что денег достаточно для покупки билета и валюта ETH
         let payment_asset_id: b256 = msg_asset_id().into();
         let payment_amount = msg_amount();
@@ -131,10 +118,7 @@ impl NFTTicketingContract for Contract {
         //проверяем что tickets_sold < max_participantes 
         require(event.tickets_sold < event.max_participantes, Error::SorryButSoldOut);
 
-        //todo
         //минтим билет на адрес того кто вызвал функцию buy_ticket
-
-
         let buyer = msg_sender().unwrap();
         let token_id = 1;
         mint(token_id, buyer);
@@ -172,3 +156,15 @@ impl NFTTicketingContract for Contract {
 
 }
 
+
+
+//configurable block
+//https://fuellabs.github.io/sway/v0.42.0/book/basics/constants.html
+//https://rust.fuel.network/v0.42.0/contracts/configurable-constants.html
+//logs
+//https://fuellabs.github.io/sway/v0.42.0/book/basics/comments_and_logging.html
+//https://rust.fuel.network/v0.42.0/calling-contracts/logs.html
+//identity
+//https://fuellabs.github.io/sway/v0.42.0/book/basics/blockchain_types.html
+//match
+//https://fuellabs.github.io/sway/v0.42.0/book/basics/control_flow.html?highlight=match#match-expressions

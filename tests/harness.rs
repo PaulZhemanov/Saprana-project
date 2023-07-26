@@ -1,10 +1,7 @@
 use fuels::{prelude::*, types::SizedAsciiString};
 
 // Load abi from json
-abigen!(Contract(
-    name = "NtfTicketsContract",
-    abi = "out/debug/saprana-abi.json"
-));
+abigen!(Contract(name = "Ntf", abi = "out/debug/saprana-abi.json"));
 
 #[tokio::test]
 async fn main_test() {
@@ -19,8 +16,8 @@ async fn main_test() {
     // let buyer3 = &wallets[6];
     // let buyer4 = &wallets[6];
 
-    let protocol_fee = (0.01 * 10f64.powf(9.0)) as u64;
-    let configurables = NtfTicketsContractConfigurables::default()
+    let protocol_fee = (0.01 * 10f64.powf(9.0)) as u64; //0.01 eth
+    let configurables = NtfConfigurables::default()
         .set_ADMIN(admin.address().into())
         .set_PROTOCOL_OWNER_FEE(protocol_fee);
     let config = LoadConfiguration::default().set_configurables(configurables);
@@ -30,16 +27,20 @@ async fn main_test() {
         .await
         .unwrap();
 
-    let admin_instance = NtfTicketsContract::new(id.clone(), admin.clone());
+    let admin_instance = Ntf::new(id.clone(), admin.clone());
 
     let mut name: String = "Test event".into();
     name.push_str(" ".repeat(50 - name.len()).as_str());
     let name = SizedAsciiString::<50>::new(name).unwrap();
     let price = 0.01 * 10f64.powf(9.0); //0.01 ETH
+    let price1: u64 = 10_000_000;
 
     // println!("id = {:?}", id);
     // println!("contract address = {:?}", contract_instance.contract_id());
     let event_maker_instance = admin_instance.with_account(event_maker.clone()).unwrap();
+    let mut timestamp = tai64::Tai64N::now();
+
+    // timestamp.add(1);
     let res = event_maker_instance
         .methods()
         .create_event(name, 5, 0, price as u64)
@@ -60,7 +61,20 @@ async fn main_test() {
         .simulate()
         .await
         .unwrap();
-    println!("event = {:#?}", res.value);
+    // println!("event = {:#?}", res.value);
+
+    let res = event_maker_instance
+        .methods()
+        .buy_ticket(event_id)
+        .tx_params(TxParameters::default().set_gas_price(1))
+        .call_params(CallParameters::default().set_amount(price1))
+        .unwrap()
+        .append_variable_outputs(1)
+        .call()
+        .await
+        .unwrap();
+
+    // println!("buy = {:#?}", res);
 
     // let res = methods.log_values().call().await.unwrap();
     // println!("logs = {:?}", res.decode_logs());
