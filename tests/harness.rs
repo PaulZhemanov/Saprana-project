@@ -1,7 +1,9 @@
+use chrono::{Days, Utc};
 use fuels::{prelude::*, types::SizedAsciiString};
+use tai64::Tai64;
 
 // Load abi from json
-abigen!(Contract(name = "Ntf", abi = "out/debug/saprana-abi.json"));
+abigen!(Contract(name = "DApp", abi = "out/debug/saprana-abi.json"));
 
 #[tokio::test]
 async fn main_test() {
@@ -17,7 +19,7 @@ async fn main_test() {
     // let buyer4 = &wallets[6];
 
     let protocol_fee = (0.01 * 10f64.powf(9.0)) as u64; //0.01 eth
-    let configurables = NtfConfigurables::default()
+    let configurables = DAppConfigurables::default()
         .set_ADMIN(admin.address().into())
         .set_PROTOCOL_OWNER_FEE(protocol_fee);
     let config = LoadConfiguration::default().set_configurables(configurables);
@@ -27,7 +29,7 @@ async fn main_test() {
         .await
         .unwrap();
 
-    let admin_instance = Ntf::new(id.clone(), admin.clone());
+    let admin_instance = DApp::new(id.clone(), admin.clone());
 
     let mut name: String = "Test event".into();
     name.push_str(" ".repeat(50 - name.len()).as_str());
@@ -38,12 +40,13 @@ async fn main_test() {
     // println!("id = {:?}", id);
     // println!("contract address = {:?}", contract_instance.contract_id());
     let event_maker_instance = admin_instance.with_account(event_maker.clone()).unwrap();
-    let mut timestamp = tai64::Tai64N::now();
+    let days = Days::new(1);
+    let timestamp = Utc::now().checked_add_days(days).unwrap().timestamp();
+    let tai64_timestamp = Tai64::from_unix(timestamp).0;
 
-    // timestamp.add(1);
     let res = event_maker_instance
         .methods()
-        .create_event(name, 5, 0, price as u64)
+        .create_event(name, 5, tai64_timestamp, price as u64)
         .tx_params(TxParameters::default().set_gas_price(1))
         .call_params(CallParameters::default().set_amount(protocol_fee))
         .unwrap()
