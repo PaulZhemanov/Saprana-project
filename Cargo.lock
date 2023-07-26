@@ -2964,6 +2964,7 @@ dependencies = [
 name = "saprana"
 version = "0.1.0"
 dependencies = [
+ "chrono",
  "fuels",
  "tai64",
  "tokio",

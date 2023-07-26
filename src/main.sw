@@ -122,7 +122,9 @@ impl NFTTicketingContract for Contract {
         let buyer = msg_sender().unwrap();
         let token_id = 1;
         mint(token_id, buyer);
-        transfer(buyer, token_id);
+        transfer(buyer, token_id); // когда будешь чинить ошибку "TokenDoesNotExist" попроьуй закомментить эту строку 😉 
+        //подробнее о ошибке можешь изучить тут
+        //https://github.com/search?q=repo:FuelLabs/sway-libs%20TokenDoesNotExist&type=code 
 
         //увеличиваем баланс владельца ивента
         event.tickets_sold += 1;

@@ -16,4 +16,5 @@ name = "integration_tests"
 path = "tests/harness.rs"
 
 [dependencies]
+chrono = "0.4.26"
 tai64 = "4.0.0"
