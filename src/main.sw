@@ -19,7 +19,7 @@ abi NFTTicketingContract {
     fn claim(event_id: u64);
     
     #[storage(read)]
-    fn verify(event_id: u64, nft_id: u64) -> bool;
+    fn verify(owner: Address, event_id: u64, nft_id: u64) -> bool;
 
     #[storage(read)]
     fn get_event(id: u64) -> Event;
@@ -36,7 +36,6 @@ struct Event {
     ticket_price: u64,
     tickets_sold: u64,
     balance: u64,
-    //guests: 
 }
 
 enum Error {
@@ -102,10 +101,6 @@ impl NFTTicketingContract for Contract {
         let mut event = storage.events.get(id).read();
 
         let buyer: Identity = msg_sender().unwrap();
-        let buyer: Address = match buyer {
-            Identity::Address(identity) => identity,
-            _ => revert(0),
-        };
        
         //проверяем что денег достаточно для покупки билета и валюта ETH
         let payment_asset_id: b256 = msg_asset_id().into();
@@ -119,12 +114,8 @@ impl NFTTicketingContract for Contract {
         require(event.tickets_sold < event.max_participantes, Error::SorryButSoldOut);
 
         //минтим билет на адрес того кто вызвал функцию buy_ticket
-        let buyer = msg_sender().unwrap();
-        let token_id = 1;
-        mint(token_id, buyer);
-        transfer(buyer, token_id); // когда будешь чинить ошибку "TokenDoesNotExist" попроьуй закомментить эту строку 😉 
-        //подробнее о ошибке можешь изучить тут
-        //https://github.com/search?q=repo:FuelLabs/sway-libs%20TokenDoesNotExist&type=code 
+        mint(1, buyer);
+        //todo add event id and ticket number into metadata
 
         //увеличиваем баланс владельца ивента
         event.tickets_sold += 1;
@@ -144,10 +135,9 @@ impl NFTTicketingContract for Contract {
     }
     
     #[storage(read)]
-    fn verify(event_id: u64, token_id: u64) -> bool {//todo
-        let buyer_check = owner_of(token_id).unwrap();
-        //return buyer_check;
-        false
+    fn verify(owner: Address, event_id: u64, token_id: u64) -> bool {
+        //todo check if event_id == event_id from metadata
+        owner_of(token_id).unwrap() == Identity::Address(owner) // && get_metadata(token_id).event_id == event_id
     }
   
     #[storage(read)]
