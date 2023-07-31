@@ -1,4 +1,4 @@
-use chrono::{Days, Utc};
+use chrono::{Duration, Utc};
 use fuels::{prelude::*, types::SizedAsciiString};
 use tai64::Tai64;
 
@@ -40,13 +40,17 @@ async fn main_test() {
     // println!("id = {:?}", id);
     // println!("contract address = {:?}", contract_instance.contract_id());
     let event_maker_instance = admin_instance.with_account(event_maker.clone()).unwrap();
-    let days = Days::new(1);
-    let timestamp = Utc::now().checked_add_days(days).unwrap().timestamp();
-    let tai64_timestamp = Tai64::from_unix(timestamp).0;
+
+    let day = Duration::days(1); 
+    let deadline_tomorrow = Tai64::from_unix(Utc::now().checked_add_signed(day).unwrap().timestamp()).0;
+    let deadline_yesterday = Tai64::from_unix(Utc::now().checked_sub_signed(day).unwrap().timestamp()).0;
+
+    println!("Deadline tomorrow = {deadline_tomorrow}");
+    println!("Deadline yesterday = {deadline_yesterday}");
 
     let res = event_maker_instance
         .methods()
-        .create_event(name, 5, tai64_timestamp, price as u64)
+        .create_event(name, 5, deadline_tomorrow, price as u64)
         .tx_params(TxParameters::default().set_gas_price(1))
         .call_params(CallParameters::default().set_amount(protocol_fee))
         .unwrap()
@@ -64,7 +68,7 @@ async fn main_test() {
         .simulate()
         .await
         .unwrap();
-    // println!("event = {:#?}", res.value);
+    println!("event = {:#?}", res.value);
 
     let res = event_maker_instance
         .methods()
