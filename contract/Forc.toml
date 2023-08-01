@@ -7,4 +7,3 @@ name = "saprana"
 [dependencies]
 nft = { git = "https://github.com/FuelLabs/sway-libs"}
 
-
