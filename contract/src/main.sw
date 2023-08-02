@@ -46,7 +46,6 @@ struct TicketMetadata{
 
 enum Error {
     AddressAlreadyMint: (),
-    //CannotReinitialize: (),
     MintIsClosed: (),
     NotOwner: (),
     SorryButSoldOut: ()
@@ -65,11 +64,19 @@ storage {
 struct CreateEventLog {
     event: Event,
     timestamp: u64,
-    payment: u64,
+    payment: u64
 }
 
-
 struct BuyTicketLog {
+    event: Event,
+    timestamp: u64,
+    payment: u64
+}
+
+struct ClaimLog{
+    event: Event,
+    timestamp: u64,
+    payment: u64
 }
 
 
@@ -145,7 +152,11 @@ impl NFTTicketingContract for Contract {
         event.tickets_sold += 1;
         event.balance += event.ticket_price;
         storage.events.insert(id, event);
-        log(BuyTicketLog{});
+        log(BuyTicketLog{
+            event,
+            timestamp: timestamp(),
+            payment: event.ticket_price
+        });
         ticket_id
     }
 
@@ -158,6 +169,11 @@ impl NFTTicketingContract for Contract {
         transfer_to_address(event.balance, AssetId::from(ZERO_B256), event.owner);
         event.balance = 0;
         storage.events.insert(id, event);
+        log(ClaimLog{
+            event,
+            timestamp: timestamp(),
+            payment: event.ticket_price
+        });
     }
     
     #[storage(read)]
