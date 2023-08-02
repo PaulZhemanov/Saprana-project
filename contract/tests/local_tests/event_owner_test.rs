@@ -41,26 +41,28 @@ async fn main_test() {
 
     // println!("id = {:?}", id);
     // println!("contract address = {:?}", contract_instance.contract_id());
-    
-    let res = event_maker_instance
-    .methods()
-    .create_event(name, 5, deadline_yesterday, price as u64)
-    .tx_params(TxParameters::default().set_gas_price(1))
-    .call_params(CallParameters::default().set_amount(protocol_fee))
-    .unwrap()
-    .append_variable_outputs(1)
-    .call()
-    .await
-    .unwrap();
+    let day = Duration::days(2);
+    let deadline_tomorrow =
+        Tai64::from_unix(Utc::now().checked_add_signed(day).unwrap().timestamp()).0;
+    let deadline_yesterday =
+        Tai64::from_unix(Utc::now().checked_sub_signed(day).unwrap().timestamp()).0;
+    //assert(res.is_error())
+    println!("Deadline tomorrow = {deadline_tomorrow}");
+    println!("Deadline yesterday = {deadline_yesterday}");
 
-let event_id = res.value;
-println!("event id = {event_id}");
-let day = Duration::days(2); 
-let deadline_tomorrow = Tai64::from_unix(Utc::now().checked_add_signed(day).unwrap().timestamp()).0;
-let deadline_yesterday = Tai64::from_unix(Utc::now().checked_sub_signed(day).unwrap().timestamp()).0;
-//assert(res.is_error())
-println!("Deadline tomorrow = {deadline_tomorrow}");
-println!("Deadline yesterday = {deadline_yesterday}");
+    let res = event_maker_instance
+        .methods()
+        .create_event(name, 5, deadline_yesterday, price as u64)
+        .tx_params(TxParameters::default().set_gas_price(1))
+        .call_params(CallParameters::default().set_amount(protocol_fee))
+        .unwrap()
+        .append_variable_outputs(1)
+        .call()
+        .await
+        .unwrap();
+
+    let event_id = res.value;
+    println!("event id = {event_id}");
 
     let res = event_maker_instance
         .methods()
@@ -78,9 +80,8 @@ println!("Deadline yesterday = {deadline_yesterday}");
         .unwrap()
         .append_variable_outputs(1)
         .call()
-        .await
-        .unwrap();
-
+        .await;
+    assert!(res.is_err() == true);
     // let ticket_id = res.value;
     // todo get ticket id from buy_ticket call
     // verify ticket
