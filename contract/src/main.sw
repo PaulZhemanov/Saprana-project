@@ -9,7 +9,6 @@ use std::block::timestamp;
 use std::logging::log;
 use nft::{mint, transfer, owner_of, tokens_minted};
 use nft::extensions::token_metadata::*;
-use std::storage::storage_api::read;
 
 abi NFTTicketingContract {
     #[storage(read, write), payable]
@@ -71,13 +70,15 @@ struct CreateEventLog {
 struct BuyTicketLog {
     event: Event,
     timestamp: u64,
-    payment: u64
+    buyer: Identity,
+    ticket_id: u64,
+    ticket_number: u64
 }
 
 struct ClaimLog{
     event: Event,
     timestamp: u64,
-    payment: u64
+    amount: u64
 }
 
 
@@ -131,7 +132,6 @@ impl NFTTicketingContract for Contract {
         let mut event = storage.events.get(id).read();
 
         let buyer: Identity = msg_sender().unwrap();
-       
         //проверяем что денег достаточно для покупки билета и валюта ETH
         let payment_asset_id: b256 = msg_asset_id().into();
         let payment_amount = msg_amount();
@@ -155,8 +155,10 @@ impl NFTTicketingContract for Contract {
         storage.events.insert(id, event);
         log(BuyTicketLog{
             event,
+            buyer,
             timestamp: timestamp(),
-            payment: event.ticket_price
+            ticket_id,
+            ticket_number: event.tickets_sold 
         });
         ticket_id
     }
@@ -168,13 +170,13 @@ impl NFTTicketingContract for Contract {
         require(caller == Identity::Address(event.owner), Error::NotOwner);
         assert(event.balance > 0);
         transfer_to_address(event.balance, AssetId::from(ZERO_B256), event.owner);
-        event.balance = 0;
-        storage.events.insert(id, event);
         log(ClaimLog{
             event,
             timestamp: timestamp(),
-            payment: event.ticket_price
+            amount: event.balance
         });
+        event.balance = 0;
+        storage.events.insert(id, event);
     }
     
     #[storage(read)]
