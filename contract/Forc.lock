@@ -4,7 +4,7 @@ source = 'path+from-root-67732E1923984E25'
 
 [[package]]
 name = 'nft'
-source = 'git+https://github.com/FuelLabs/sway-libs?default-branch#14139407704840d45d7eba9b2fa040b1b430b3a9'
+source = 'git+https://github.com/FuelLabs/sway-libs?tag=v0.8.0#f6bb5c234e020d556e1bc688e0f1f368dc9b0f9a'
 dependencies = ['std']
 
 [[package]]

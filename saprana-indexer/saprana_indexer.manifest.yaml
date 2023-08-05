@@ -1,0 +1,13 @@
+---
+namespace: paulzhemanov
+identifier: saprana_indexer
+abi: "./saprana-abi.json"
+fuel_client: ~
+graphql_schema: schema/saprana_indexer.schema.graphql
+module:
+  wasm: target/wasm32-unknown-unknown/release/saprana_indexer.wasm
+metrics: ~
+contract_id: fuel1qy8fr847fs24zuneutv59n0lvmhjsqe0txuafvqqrqullffqrlasss5nvl
+start_block: 1752900
+end_block: ~
+resumable: true

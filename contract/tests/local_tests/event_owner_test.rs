@@ -6,17 +6,12 @@ use tai64::Tai64;
 abigen!(Contract(name = "DApp", abi = "out/debug/saprana-abi.json"));
 
 #[tokio::test]
-async fn main_test() {
+async fn event_owner_test() {
     let config = WalletsConfig::new(Some(7), Some(1), Some(1_000_000_000));
     let wallets: Vec<WalletUnlocked> =
         launch_custom_provider_and_get_wallets(config, None, None).await;
     let admin = &wallets[0];
     let event_maker = &wallets[1];
-    let buyer = &wallets[2];
-    // let buyer1 = &wallets[3];
-    // let buyer2 = &wallets[4];
-    // let buyer3 = &wallets[6];
-    // let buyer4 = &wallets[6];
 
     let protocol_fee = (0.01 * 10f64.powf(9.0)) as u64; //0.01 eth
     let configurables = DAppConfigurables::default()
@@ -31,7 +26,7 @@ async fn main_test() {
 
     let admin_instance = DApp::new(id.clone(), admin.clone());
     let event_maker_instance = admin_instance.with_account(event_maker.clone()).unwrap();
-    let buyer_instance = admin_instance.with_account(event_maker.clone()).unwrap();
+    // let buyer_instance = admin_instance.with_account(event_maker.clone()).unwrap();
 
     let mut name: String = "Test event".into();
     name.push_str(" ".repeat(50 - name.len()).as_str());
@@ -42,13 +37,12 @@ async fn main_test() {
     // println!("id = {:?}", id);
     // println!("contract address = {:?}", contract_instance.contract_id());
     let day = Duration::days(2);
-    let deadline_tomorrow =
-        Tai64::from_unix(Utc::now().checked_add_signed(day).unwrap().timestamp()).0;
+    // let deadline_tomorrow =
+        // Tai64::from_unix(Utc::now().checked_add_signed(day).unwrap().timestamp()).0;
     let deadline_yesterday =
         Tai64::from_unix(Utc::now().checked_sub_signed(day).unwrap().timestamp()).0;
-    //assert(res.is_error())
-    println!("Deadline tomorrow = {deadline_tomorrow}");
-    println!("Deadline yesterday = {deadline_yesterday}");
+    // println!("Deadline tomorrow = {deadline_tomorrow}");
+    // println!("Deadline yesterday = {deadline_yesterday}");
 
     let res = event_maker_instance
         .methods()

@@ -1,7 +1,8 @@
 contract;
 
 use std::constants::ZERO_B256;
-use std::storage::storage_vec::*;
+// use std::storage::storage_vec::*;
+use std::auth::msg_sender;
 use std::call_frames::msg_asset_id; // get attached asset id func
 use std::context::msg_amount; // get attached asset amount func
 use std::token::transfer_to_address;
@@ -18,7 +19,7 @@ abi NFTTicketingContract {
     fn buy_ticket(event_id: u64) -> u64;
     
     #[storage(read, write)]
-    fn claim(event_id: u64);
+    fn claim(event_id: u64) -> u64;
     
     #[storage(read)]
     fn verify(owner: Address, event_id: u64, nft_id: u64) -> bool;
@@ -52,7 +53,8 @@ enum Error {
 }
 
 configurable {
-    ADMIN: Address = Address::from(ZERO_B256),
+    // ADMIN: Address = Address::from(ZERO_B256),
+    ADMIN: Address = Address::from(0x0000000000000000000000000000000000000000000000000000000000000000),
     PROTOCOL_OWNER_FEE: u64 = 10_000_000, //0.01 ETH
 }
 
@@ -103,7 +105,8 @@ impl NFTTicketingContract for Contract {
         transfer_to_address(protocol_fee_amount, AssetId::from(protocol_fee_asset_id), ADMIN);
 
         // создаем экземпляр ивента
-        let id = storage.total_events_count.try_read().unwrap_or(0);
+        // let id = storage.total_events_count.try_read().unwrap_or(0);
+        let id = storage.total_events_count;
         let new_event_instance = Event {
             id,
             owner,
@@ -117,7 +120,8 @@ impl NFTTicketingContract for Contract {
 
         // добавляем его в сторадж
         storage.events.insert(id, new_event_instance);
-        storage.total_events_count.write(id + 1);
+        // storage.total_events_count.write(id + 1);
+        storage.total_events_count = id + 1;
         log(CreateEventLog{
             event: new_event_instance,
             timestamp: timestamp(),
@@ -129,7 +133,8 @@ impl NFTTicketingContract for Contract {
     #[storage(read, write), payable]
     fn buy_ticket(id: u64) -> u64 {
         //достаем ивент из storage.events по id
-        let mut event = storage.events.get(id).read();
+        // let mut event = storage.events.get(id).read();
+        let mut event = storage.events.get(id).unwrap();
 
         let buyer: Identity = msg_sender().unwrap();
         //проверяем что денег достаточно для покупки билета и валюта ETH
@@ -164,19 +169,24 @@ impl NFTTicketingContract for Contract {
     }
 
     #[storage(read, write)]
-    fn claim(id: u64){
-        let mut event = storage.events.get(id).read();
+    fn claim(id: u64) -> u64 {
+        // let mut event = storage.events.get(id).read();
+        let mut event = storage.events.get(id).unwrap();
         let caller: Identity = msg_sender().unwrap();
         require(caller == Identity::Address(event.owner), Error::NotOwner);
-        assert(event.balance > 0);
+        if event.balance == 0 {
+            return 0;
+        }
         transfer_to_address(event.balance, AssetId::from(ZERO_B256), event.owner);
-        log(ClaimLog{
+        let claim_log = ClaimLog{
             event,
             timestamp: timestamp(),
             amount: event.balance
-        });
+        };
+        log(claim_log);
         event.balance = 0;
         storage.events.insert(id, event);
+        claim_log.amount
     }
     
     #[storage(read)]
@@ -186,10 +196,9 @@ impl NFTTicketingContract for Contract {
   
     #[storage(read)]
     fn get_event(id: u64) -> Event {
-        storage.events.get(id).read()
+        // storage.events.get(id).read()
+        storage.events.get(id).unwrap()
     }
-
-
 }
 
 

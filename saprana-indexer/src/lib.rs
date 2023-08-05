@@ -1,8 +1,13 @@
 extern crate alloc;
 use fuel_indexer_utils::prelude::*;
 
-#[indexer(manifest = "nft_ticketing_indexer.manifest.yaml")]
-pub mod nft_ticketing_indexer_index_mod {
+#[indexer(manifest = "saprana_indexer.manifest.yaml")]
+pub mod saprana_indexer_index_mod {
+
+    fn saprana_indexer_handler(block: BlockData) {
+        let height = block.height;
+        info!("Height: {height}");
+    }
 
     fn handle_event_creation(data: CreateEventLog) {
         let entry = EventEntry {
@@ -20,7 +25,6 @@ pub mod nft_ticketing_indexer_index_mod {
         entry.save();
     }
 
-
     fn handle_buy_ticket(data: BuyTicketLog) {
         let entry = BuyTicketEntry {
             id: data.timestamp,
@@ -32,7 +36,6 @@ pub mod nft_ticketing_indexer_index_mod {
         };
         entry.save();
     }
-
 
     fn handle_claim(data: ClaimLog) {
         let entry = ClaimEntry {

@@ -296,7 +296,7 @@
       "name": "claim",
       "output": {
         "name": "",
-        "type": 0,
+        "type": 14,
         "typeArguments": null
       },
       "attributes": [
@@ -492,7 +492,7 @@
         "type": 7,
         "typeArguments": []
       },
-      "offset": 14456
+      "offset": 13960
     },
     {
       "name": "PROTOCOL_OWNER_FEE",
@@ -501,7 +501,7 @@
         "type": 14,
         "typeArguments": null
       },
-      "offset": 14488
+      "offset": 13992
     }
   ]
 }
