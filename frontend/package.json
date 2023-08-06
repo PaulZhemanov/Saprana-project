@@ -1,9 +1,9 @@
 {
   "name": "frontend",
+  "homepage": "https://PaulZhemanov.github.io/Saprana-project",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@emotion/styled": "^11.11.0",
     "@fuel-wallet/sdk": "^0.11.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -12,8 +12,9 @@
     "@types/node": "^16.18.39",
     "@types/react": "^18.2.18",
     "@types/react-dom": "^18.2.7",
-    "fuels": "^0.44.1",
-    "prettier": "^3.0.1",
+    "antd": "^5.8.2",
+    "fuels": "^0.43.1",
+    "gh-pages": "^5.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
@@ -24,7 +25,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [

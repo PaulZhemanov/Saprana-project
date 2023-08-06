@@ -22,6 +22,7 @@ pub mod saprana_indexer_index_mod {
             tickets_sold: data.event.tickets_sold,
             balance: data.event.balance,
         };
+        info!("CreateEventLog {:#?}", entry);
         entry.save();
     }
 
@@ -34,6 +35,7 @@ pub mod saprana_indexer_index_mod {
             ticket_id: data.ticket_id,
             ticket_number: data.ticket_number,
         };
+        info!("BuyTicketLog {:#?}", entry);
         entry.save();
     }
 
@@ -44,6 +46,7 @@ pub mod saprana_indexer_index_mod {
             timestamp: data.timestamp,
             amount: data.amount,
         };
+        info!("ClaimLog {:#?}", entry);
         entry.save();
     }
 }

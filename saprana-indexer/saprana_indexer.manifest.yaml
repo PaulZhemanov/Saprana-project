@@ -8,6 +8,6 @@ module:
   wasm: target/wasm32-unknown-unknown/release/saprana_indexer.wasm
 metrics: ~
 contract_id: fuel1qy8fr847fs24zuneutv59n0lvmhjsqe0txuafvqqrqullffqrlasss5nvl
-start_block: 1752900
+start_block: 1761314
 end_block: ~
 resumable: true

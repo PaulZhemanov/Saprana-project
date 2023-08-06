@@ -9,7 +9,7 @@ use fuels::{
 abigen!(Contract(name = "DApp", abi = "out/debug/saprana-abi.json"));
 
 const RPC: &str = "beta-3.fuel.network";
-const CONTRACT_ADDRESS: &str = "0x010e919ebe4c15517279e2d942cdff66ef28032f59b9d4b0001839ffa5201ffb";
+const CONTRACT_ADDRESS: &str = "0x89638992d91ccd969f8a8f66735ce7918a14da8ab6d022b48ba7796b3288530f";
 
 //admin - owner of contract
 //alice - event manager (creator of event)
@@ -17,7 +17,7 @@ const CONTRACT_ADDRESS: &str = "0x010e919ebe4c15517279e2d942cdff66ef28032f59b9d4
 
 #[tokio::test]
 async fn buy_ticket_test() {
-    let event_id = 1;
+    let event_id = 0;
     dotenv().ok();
 
     let provider = Provider::connect(RPC).await.unwrap();
