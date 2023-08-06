@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Saprana-project/static/css/main.073c9b0a.css",
+    "main.js": "/Saprana-project/static/js/main.701c3e74.js",
+    "static/js/787.cda612ba.chunk.js": "/Saprana-project/static/js/787.cda612ba.chunk.js",
+    "index.html": "/Saprana-project/index.html",
+    "main.073c9b0a.css.map": "/Saprana-project/static/css/main.073c9b0a.css.map",
+    "main.701c3e74.js.map": "/Saprana-project/static/js/main.701c3e74.js.map",
+    "787.cda612ba.chunk.js.map": "/Saprana-project/static/js/787.cda612ba.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.073c9b0a.css",
+    "static/js/main.701c3e74.js"
+  ]
+}
