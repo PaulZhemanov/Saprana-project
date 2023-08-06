@@ -14,7 +14,4 @@ A platform that allows you to raise funds to organize concerts, promotions and o
 The project is actively under development, and we are excited to present the demo version on the beta-3 testnet by Fuel. We invite all interested users to join our testing environment and explore the capabilities of our platform. Please note that the demo version is for testing purposes only and may have some temporary limitations and restricted content.
 
 
-
-
-```bash
-# Пример команды или кода
+Video: https://youtu.be/gGHyVmrOEHE
