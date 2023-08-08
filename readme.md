@@ -15,3 +15,4 @@ The project is actively under development, and we are excited to present the dem
 
 
 Video: https://youtu.be/gGHyVmrOEHE
+Presentation: https://docs.google.com/presentation/d/1l1yzOYVauh-61NaQh9iWtSM6dOgTe0Ng3x6M9vMVmEA/edit?usp=drive_link
