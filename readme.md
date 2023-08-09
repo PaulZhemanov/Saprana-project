@@ -14,13 +14,15 @@ A platform that allows you to raise funds to organize concerts, promotions and o
 The project is actively under development, and we are excited to present the demo version on the beta-3 testnet by Fuel. We invite all interested users to join our testing environment and explore the capabilities of our platform. Please note that the demo version is for testing purposes only and may have some temporary limitations and restricted content.
 
 ## Guide
-* Installation 
+
 Start by [installing the Rust toolchain.](https://www.rust-lang.org/tools/install)
 
 Then, [install the Fuel toolchain](https://github.com/FuelLabs/fuelup)
 
 Finally, set the beta-3 toolchain as your default distribution with the following command:
-```fuelup default beta-3```
+```
+fuelup default beta-3
+```
 
 
 
