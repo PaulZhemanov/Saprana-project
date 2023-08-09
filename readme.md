@@ -28,8 +28,9 @@ fuelup default beta-3
 
 From inside the    `Saprana-project/contract`` directory, run the following command to build your contract:
 ```
-forc build
+fuelup default beta-3 && forc build && fuelup default latest
 ```
+Switching to latest toolchain is necessary because the latest version of Sway does not support beta-3.
 * Testing Contract
 
 Need to install the cargo generate command. In the future, you can skip this step as it will already be installed.
@@ -40,7 +41,10 @@ For running tests use `cargo test`` in the terminal.
 ```
 cargo test
 ```
-
+You can also run each of the tests separately and monitor the performance of the contract. Open a file with any test and run it using the command
+```
+cargo test -- --nocapture  
+```
 
 
 
