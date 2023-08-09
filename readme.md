@@ -1,6 +1,7 @@
 # Introduction
 
-A platform that allows you to raise funds to organize concerts, promotions and other events through NFT. Our project is a decentralized platform for organizing concerts, promotions, and other events through the use of NFT technology. We aim to provide users with a convenient marketplace where they can purchase tickets to events and gain access to additional benefits associated with owning NFTs.
+A platform that allows you to raise funds to organize concerts, promotions and other events through NFT. 
+Our project is a decentralized platform for organizing concerts, promotions, and other events through the use of NFT technology. We aim to provide users with a convenient marketplace where they can purchase tickets to events and gain access to additional benefits associated with owning NFTs.
 
 ## Decentralized Ticket Marketplace with Ongoing NFT Benefits: A Collaborative Vision with Saprana Project
 
@@ -23,6 +24,23 @@ Finally, set the beta-3 toolchain as your default distribution with the followin
 ```
 fuelup default beta-3
 ```
+* Build the Contract
+
+From inside the    `Saprana-project/contract`` directory, run the following command to build your contract:
+```
+forc build
+```
+* Testing Contract
+
+Need to install the cargo generate command. In the future, you can skip this step as it will already be installed.
+```
+cargo install cargo-generate
+```
+For running tests use `cargo test`` in the terminal.
+```
+cargo test
+```
+
 
 
 
