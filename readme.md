@@ -20,24 +20,16 @@ Start by [installing the Rust toolchain.](https://www.rust-lang.org/tools/instal
 
 Then, [install the Fuel toolchain](https://github.com/FuelLabs/fuelup)
 
-Finally, set the beta-3 toolchain as your default distribution with the following command:
-```
-fuelup default beta-3
-```
 * Build the Contract
 
-From inside the    `Saprana-project/contract`` directory, run the following command to build your contract:
+From inside the    **Saprana-project/contract** directory, run the following command to build your contract:
 ```
 fuelup default beta-3 && forc build && fuelup default latest
 ```
 Switching to latest toolchain is necessary because the latest version of Sway does not support beta-3.
 * Testing Contract
 
-Need to install the cargo generate command. In the future, you can skip this step as it will already be installed.
-```
-cargo install cargo-generate
-```
-For running tests use `cargo test`` in the terminal.
+For running tests use **cargo test** in the terminal.
 ```
 cargo test
 ```
