@@ -13,7 +13,7 @@ use nft::extensions::token_metadata::*;
 
 abi NFTTicketingContract {
     #[storage(read, write), payable]
-    fn create_event(name: str[50], /*description: str[1000], image: str[500],*/ç max_participantes: u64, deadline: u64, ticket_price: u64) -> u64;
+    fn create_event(name: str[50], /*description: str[1000], image: str[500],*/ max_participantes: u64, deadline: u64, ticket_price: u64) -> u64;
     
     #[storage(read, write), payable]
     fn buy_ticket(event_id: u64) -> u64;

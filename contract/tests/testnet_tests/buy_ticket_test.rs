@@ -17,7 +17,7 @@ const CONTRACT_ADDRESS: &str = "0x89638992d91ccd969f8a8f66735ce7918a14da8ab6d022
 
 #[tokio::test]
 async fn buy_ticket_test() {
-    let event_id = 1;
+    let event_id = 0;
     dotenv().ok();
 
     let provider = Provider::connect(RPC).await.unwrap();
