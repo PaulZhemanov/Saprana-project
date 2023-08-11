@@ -1,8 +1,8 @@
 extern crate alloc;
 use fuel_indexer_utils::prelude::*;
 
-#[indexer(manifest = "saprana_indexer.manifest.yaml")]
-pub mod saprana_indexer_index_mod {
+#[indexer(manifest = "indexer.manifest.yaml")]
+pub mod indexer_index_mod {
 
     fn saprana_indexer_handler(block: BlockData) {
         let height = block.height;
@@ -13,7 +13,7 @@ pub mod saprana_indexer_index_mod {
         let entry = EventEntry {
             id: data.event.id,
             owner: data.event.owner,
-            // name: data.event.name,
+            name: data.event.name.to_string(),
             // description: data.event.description,
             // image: data.event.image,
             max_participantes: data.event.max_participantes,

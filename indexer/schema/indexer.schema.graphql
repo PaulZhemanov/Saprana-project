@@ -1,0 +1,29 @@
+
+type EventEntry @entity {
+  id: ID!
+  owner: Address!
+  name: Charfield!
+  # description: String!
+  # image: String!
+  max_participantes: UInt8!
+  deadline: UInt8!
+  ticket_price: UInt8!
+  tickets_sold: UInt8!
+  balance: UInt8!
+}
+
+type BuyTicketEntry @entity {
+  id: ID!
+  event_id: UInt8!
+  timestamp: UInt8!
+  buyer: Identity!
+  ticket_id: UInt8!
+  ticket_number: UInt8!
+}
+
+type ClaimEntry @entity {
+  id: ID!
+  event_id: UInt8!
+  timestamp: UInt8!
+  amount: UInt8!
+}

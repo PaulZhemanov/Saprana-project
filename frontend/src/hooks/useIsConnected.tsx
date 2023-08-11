@@ -1,27 +1,30 @@
 import { useEffect, useState } from "react";
+import { useFuel } from "./useFuel"; // Импортируем useFuel
 
-import { useFuel } from "./useFuel";
 
 export function useIsConnected() {
-  const [fuel] = useFuel();
+  const [fuel] = useFuel(); // Используем хук useFuel для получения fuel
+
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
     async function handleConnection() {
-      const isConnected = await fuel.isConnected();
-      setIsConnected(isConnected);
+      if (fuel) {
+        // Используем fuel из хука useFuel
+        const isConnected = await fuel.isConnected();
+        setIsConnected(isConnected);
+      }
     }
 
     if (fuel) {
+      // Используем fuel из хука useFuel
       handleConnection();
     }
 
-    /* eventConnection:start */
-    fuel?.on(fuel.events.connection, handleConnection);
+    fuel?.on(fuel.events.connection, handleConnection); // Используем fuel из хука useFuel
     return () => {
-      fuel?.off(fuel.events.connection, handleConnection);
+      fuel?.off(fuel.events.connection, handleConnection); // Используем fuel из хука useFuel
     };
-    /* eventConnection:end */
   }, [fuel]);
 
   return [isConnected];

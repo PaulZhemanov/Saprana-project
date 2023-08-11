@@ -11,7 +11,7 @@ use tai64::Tai64;
 abigen!(Contract(name = "DApp", abi = "out/debug/saprana-abi.json"));
 
 const RPC: &str = "beta-3.fuel.network";
-const CONTRACT_ADDRESS: &str = "0x89638992d91ccd969f8a8f66735ce7918a14da8ab6d022b48ba7796b3288530f";
+const CONTRACT_ADDRESS: &str = "0xafe5ab2dd6292ec15330af73c430b762bd32ecb636e7ae9746ce0be8f8fd25e8";
 
 //admin - owner of contract
 //alice - event manager (creator of event)

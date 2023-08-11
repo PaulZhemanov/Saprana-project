@@ -40,9 +40,9 @@ dependencies = [
 
 [[package]]
 name = "aho-corasick"
-version = "1.0.2"
+version = "1.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "43f6cb1bf222025340178f382c426f13757b2960e89779dfcb319c32542a5a41"
+checksum = "86b8f9420f797f2d9e935edf629310eb938a0d839f984e25327f3c7eed22300c"
 dependencies = [
  "memchr",
 ]
@@ -244,9 +244,9 @@ dependencies = [
 
 [[package]]
 name = "cc"
-version = "1.0.81"
+version = "1.0.82"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6c6b2562119bf28c3439f7f02db99faf0aa1a8cdfe5772a2ee155d32227239f0"
+checksum = "305fe645edc1442a0fa8b6726ba61d422798d37a52e12eaecf4b022ebbb88f01"
 dependencies = [
  "libc",
 ]
@@ -376,9 +376,9 @@ dependencies = [
 
 [[package]]
 name = "const-oid"
-version = "0.9.4"
+version = "0.9.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "795bc6e66a8e340f075fcf6227e417a2dc976b92b91f3cdc778bb858778b6747"
+checksum = "28c122c3980598d243d63d9a704629a2d748d101f278052ff068be5a4423ab6f"
 
 [[package]]
 name = "convert_case"
@@ -403,9 +403,9 @@ dependencies = [
 
 [[package]]
 name = "critical-section"
-version = "1.1.1"
+version = "1.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6548a0ad5d2549e111e1f6a11a6c2e2d00ce6a3dafe22948d67c2b443f775e52"
+checksum = "7059fff8937831a9ae6f0fe4d658ffabf58f2ca96aa9dec1c889f936f705f216"
 
 [[package]]
 name = "crypto-bigint"
@@ -466,9 +466,9 @@ dependencies = [
 
 [[package]]
 name = "der"
-version = "0.7.7"
+version = "0.7.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0c7ed52955ce76b1554f509074bb357d3fb8ac9b51288a65a3fd480d1dfba946"
+checksum = "fffa369a668c8af7dbf8b5e56c9f744fbd399949ed171606040001947de40b1c"
 dependencies = [
  "const-oid",
  "zeroize",
@@ -704,9 +704,9 @@ dependencies = [
 
 [[package]]
 name = "fuel-indexer-database-types"
-version = "0.19.1"
+version = "0.19.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ad2653fddb13d897a8c1af570df36b8f3bbafc438c6fbe08bf49057b79a75b06"
+checksum = "024768182476ce4211743ae896fcbae024ca1d2ce9f7126492c39f52001bd139"
 dependencies = [
  "async-graphql-parser",
  "async-graphql-value",
@@ -718,9 +718,9 @@ dependencies = [
 
 [[package]]
 name = "fuel-indexer-lib"
-version = "0.19.1"
+version = "0.19.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "86b440f1e15a0b0f465891509f01a7e60c4c36cf3b9e4866efac1bef82d3ee0a"
+checksum = "52856faab0aeb735a921267c0332c0a3e1a45238ccc5794a0c6496343f8bc3bc"
 dependencies = [
  "anyhow",
  "async-graphql-parser",
@@ -744,9 +744,9 @@ dependencies = [
 
 [[package]]
 name = "fuel-indexer-macros"
-version = "0.19.1"
+version = "0.19.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0de7674edf297c383da05e70fdf2a51e2ec93745a3339a5ce08df8ddf897a68a"
+checksum = "d74014118f241691775ab7a0323fa5b4620b749c3c5739b8e6b0143eb2d21c19"
 dependencies = [
  "async-graphql-parser",
  "async-graphql-value",
@@ -768,9 +768,9 @@ dependencies = [
 
 [[package]]
 name = "fuel-indexer-plugin"
-version = "0.19.1"
+version = "0.19.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "00fff16eb9f2cbff7a0615e71d3f8bb3e1808463bfc81066e7ee8c9f82aff5b3"
+checksum = "95ec74c0135cc871991e5c676a1ac94911553da858c0c424146c65ea7b0639b7"
 dependencies = [
  "bincode",
  "fuel-indexer-lib",
@@ -784,9 +784,9 @@ dependencies = [
 
 [[package]]
 name = "fuel-indexer-schema"
-version = "0.19.1"
+version = "0.19.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f0a230ef7ff36ecb0ac426a7c5e71282d02bf85553a4c8adbfb06d2f2c07ab15"
+checksum = "fb369890b1ec8748e98549289c69ba19036c6aed8378e577fe64c1ba635ecdd1"
 dependencies = [
  "async-graphql-parser",
  "fuel-indexer-lib",
@@ -799,9 +799,9 @@ dependencies = [
 
 [[package]]
 name = "fuel-indexer-types"
-version = "0.19.1"
+version = "0.19.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1dda015ff1539d1c1d3b11d888d7292395a60c7cc657c2c7c777de91932ef50b"
+checksum = "bd20e7ee0312b68e12d0a4fe9e8cb7acf834d8b0b67172e72a9798575548d3f2"
 dependencies = [
  "bincode",
  "bytes",
@@ -816,9 +816,9 @@ dependencies = [
 
 [[package]]
 name = "fuel-indexer-utils"
-version = "0.19.1"
+version = "0.19.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d1ec42b232f4de47ff3e627910cc4b036776b2e1b29f72ef8c13ce25eac9c177"
+checksum = "a2f8cfc42c2456ca5a6e55bb6308e8800ae9c9b5b89ccb7fc7aab3dc7ec4b17c"
 dependencies = [
  "fuel-indexer-macros",
  "fuel-indexer-plugin",
@@ -1179,6 +1179,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "indexer"
+version = "0.0.0"
+dependencies = [
+ "fuel-indexer-utils",
+ "fuels",
+ "serde",
+]
+
+[[package]]
 name = "indexmap"
 version = "1.9.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1384,9 +1393,9 @@ dependencies = [
 
 [[package]]
 name = "pin-project-lite"
-version = "0.2.10"
+version = "0.2.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4c40d25201921e5ff0c862a505c6557ea88568a4e3ace775ab55e93f2f4f9d57"
+checksum = "12cc1b0bf1727a77a54b6654e7b5f1af8604923edc8b81885f8ec92f9e3f0a05"
 
 [[package]]
 name = "pkcs8"
@@ -1495,13 +1504,13 @@ dependencies = [
 
 [[package]]
 name = "regex"
-version = "1.9.1"
+version = "1.9.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b2eae68fc220f7cf2532e4494aded17545fce192d59cd996e0fe7887f4ceb575"
+checksum = "81bc1d4caf89fac26a70747fe603c130093b53c773888797a6329091246d651a"
 dependencies = [
  "aho-corasick",
  "memchr",
- "regex-automata 0.3.4",
+ "regex-automata 0.3.6",
  "regex-syntax 0.7.4",
 ]
 
@@ -1516,9 +1525,9 @@ dependencies = [
 
 [[package]]
 name = "regex-automata"
-version = "0.3.4"
+version = "0.3.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b7b6d6190b7594385f61bd3911cd1be99dfddcfc365a4160cc2ab5bff4aed294"
+checksum = "fed1ceff11a1dddaee50c9dc8e4938bd106e9d89ae372f192311e7da498e3b69"
 dependencies = [
  "aho-corasick",
  "memchr",
@@ -1584,15 +1593,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1ad4cc8da4ef723ed60bced201181d83791ad433213d8c24efffda1eec85d741"
 
 [[package]]
-name = "saprana_indexer"
-version = "0.0.0"
-dependencies = [
- "fuel-indexer-utils",
- "fuels",
- "serde",
-]
-
-[[package]]
 name = "scopeguard"
 version = "1.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1648,18 +1648,18 @@ checksum = "b0293b4b29daaf487284529cc2f5675b8e57c61f70167ba415a463651fd6a918"
 
 [[package]]
 name = "serde"
-version = "1.0.181"
+version = "1.0.183"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6d3e73c93c3240c0bda063c239298e633114c69a888c3e37ca8bb33f343e9890"
+checksum = "32ac8da02677876d532745a130fc9d8e6edfa81a269b107c5b00829b91d8eb3c"
 dependencies = [
  "serde_derive",
 ]
 
 [[package]]
 name = "serde_derive"
-version = "1.0.181"
+version = "1.0.183"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "be02f6cb0cd3a5ec20bbcfbcbd749f57daddb1a0882dc2e46a6c236c90b977ed"
+checksum = "aafe972d60b0b9bee71a91b92fee2d4fb3c9d7e8f6b179aa99f27203d99a4816"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -1933,11 +1933,10 @@ checksum = "1f3ccbac311fea05f86f61904b462b55fb3df8837a366dfc601a0161d0532f20"
 
 [[package]]
 name = "tokio"
-version = "1.29.1"
+version = "1.30.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "532826ff75199d5833b9d2c5fe410f29235e25704ee5f0ef599fb51c21f4a4da"
+checksum = "2d3ce25f50619af8b0aec2eb23deebe84249e19e2ddd393a6e16e3300a6dadfd"
 dependencies = [
- "autocfg",
  "backtrace",
  "pin-project-lite",
 ]
