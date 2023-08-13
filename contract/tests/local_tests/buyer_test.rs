@@ -38,8 +38,11 @@ async fn buyer_test() {
     let event_maker_instance = admin_instance.with_account(event_maker.clone()).unwrap();
 
     let mut name: String = "Test event".into();
+    let mut description: String = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.".into();
     name.push_str(" ".repeat(50 - name.len()).as_str());
+    description.push_str(" ".repeat(256 - description.len()).as_str());
     let name = SizedAsciiString::<50>::new(name).unwrap();
+    let description = SizedAsciiString::<256>::new(description).unwrap();
     let price = 0.01 * 10f64.powf(9.0); //0.01 ETH
 
     let day = Duration::days(2);
@@ -52,7 +55,7 @@ async fn buyer_test() {
 
     let res = event_maker_instance
         .methods()
-        .create_event(name, 5, deadline_tomorrow, price as u64)
+        .create_event(name, description, 5, deadline_tomorrow, price as u64)
         .append_variable_outputs(1)
         .tx_params(TxParameters::default().set_gas_price(1))
         .call_params(CallParameters::default().set_amount(protocol_fee).set_asset_id(BASE_ASSET_ID))

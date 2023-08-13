@@ -11,7 +11,7 @@ use tai64::Tai64;
 abigen!(Contract(name = "DApp", abi = "out/debug/saprana-abi.json"));
 
 const RPC: &str = "beta-3.fuel.network";
-const CONTRACT_ADDRESS: &str = "0xafe5ab2dd6292ec15330af73c430b762bd32ecb636e7ae9746ce0be8f8fd25e8";
+const CONTRACT_ADDRESS: &str = "0xa8cda57820d42f5d1a89ce02b870c6f14d5777971b940d87c2353628ac107e99";
 
 //admin - owner of contract
 //alice - event manager (creator of event)
@@ -20,6 +20,7 @@ const CONTRACT_ADDRESS: &str = "0xafe5ab2dd6292ec15330af73c430b762bd32ecb636e7ae
 #[tokio::test]
 async fn create_event_test() {
     let mut name: String = "Test event".into();
+    let mut description: String = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.".into();
     let max_guests = 100;
     let price = 0.01 * 10f64.powf(9.0); //0.01 ETH
     let in_days = Duration::days(30);
@@ -36,12 +37,14 @@ async fn create_event_test() {
 
     name.push_str(" ".repeat(50 - name.len()).as_str());
     let name = SizedAsciiString::<50>::new(name).unwrap();
+    description.push_str(" ".repeat(256 - description.len()).as_str());
+    let description = SizedAsciiString::<256>::new(description).unwrap();
 
     let deadline = Tai64::from_unix(Utc::now().checked_add_signed(in_days).unwrap().timestamp()).0;
 
     let res = event_maker_instance
         .methods()
-        .create_event(name, max_guests, deadline, price as u64)
+        .create_event(name, description, max_guests, deadline, price as u64)
         .tx_params(TxParameters::default().set_gas_price(1))
         .call_params(CallParameters::default().set_amount(protocol_fee))
         .unwrap()

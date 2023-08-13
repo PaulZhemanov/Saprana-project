@@ -9,7 +9,7 @@ use fuels::{
 abigen!(Contract(name = "DApp", abi = "out/debug/saprana-abi.json"));
 
 const RPC: &str = "beta-3.fuel.network";
-const CONTRACT_ADDRESS: &str = "0xafe5ab2dd6292ec15330af73c430b762bd32ecb636e7ae9746ce0be8f8fd25e8";
+const CONTRACT_ADDRESS: &str = "0xa8cda57820d42f5d1a89ce02b870c6f14d5777971b940d87c2353628ac107e99";
 
 //admin - owner of contract
 //alice - event manager (creator of event)
