@@ -29,11 +29,11 @@ async fn event_owner_test() {
     // let buyer_instance = admin_instance.with_account(event_maker.clone()).unwrap();
 
     let mut name: String = "Test event".into();
-    let mut description: String = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.".into();
+    let mut description: String = "hi guys go puff.".into();
     name.push_str(" ".repeat(50 - name.len()).as_str());
-    description.push_str(" ".repeat(256 - description.len()).as_str());
+    description.push_str(" ".repeat(50 - description.len()).as_str());
     let name = SizedAsciiString::<50>::new(name).unwrap();
-    let description = SizedAsciiString::<256>::new(description).unwrap();
+    let description = SizedAsciiString::<50>::new(description).unwrap();
 
     let price = 0.01 * 10f64.powf(9.0); //0.01 ETH
     let price1: u64 = 10_000_000;

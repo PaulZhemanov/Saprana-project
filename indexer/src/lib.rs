@@ -14,7 +14,7 @@ pub mod indexer_index_mod {
             id: data.event.id,
             owner: data.event.owner,
             name: data.event.name.to_string(),
-            description: data.event.description.to_string(),
+            //description: data.event.description.to_string(),
             // image: data.event.image,
             max_participantes: data.event.max_participantes,
             deadline: data.event.deadline,

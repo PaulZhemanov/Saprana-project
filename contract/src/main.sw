@@ -13,7 +13,7 @@ use nft::extensions::token_metadata::*;
 
 abi NFTTicketingContract {
     #[storage(read, write), payable]
-    fn create_event(name: str[50], description: str[256], /* image: str[500],*/ max_participantes: u64, deadline: u64, ticket_price: u64) -> u64;
+    fn create_event(name: str[50], description: str[50], /* image: str[500],*/ max_participantes: u64, deadline: u64, ticket_price: u64) -> u64;
     
     #[storage(read, write), payable]
     fn buy_ticket(event_id: u64) -> u64;
@@ -32,7 +32,7 @@ struct Event {
     id: u64,
     owner: Address,
     name: str[50],
-    description: str[256],
+    description: str[50],
     // image: str[500],
     max_participantes: u64,
     deadline: u64, //tai64 format
@@ -87,7 +87,7 @@ struct ClaimLog{
 impl NFTTicketingContract for Contract {
 
     #[storage(read, write), payable]
-    fn create_event(name: str[50], description: str[256], max_participantes: u64, deadline: u64, ticket_price: u64)-> u64 {
+    fn create_event(name: str[50], description: str[50], max_participantes: u64, deadline: u64, ticket_price: u64)-> u64 {
         
         assert(ADMIN != Address::from(ZERO_B256)); // не давать создавать заказ если админ равен Address::from(ZERO_B256)
         let owner: Identity = msg_sender().unwrap();

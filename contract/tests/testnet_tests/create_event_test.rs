@@ -20,7 +20,7 @@ const CONTRACT_ADDRESS: &str = "0x753c35135b9a53e7eca4cc43475436f0b1f7bb3cf3e76c
 #[tokio::test]
 async fn create_event_test() {
     let mut name: String = "Test event".into();
-    let mut description: String = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.".into();
+    let mut description: String = "hi guys go puff.".into();
     let max_guests = 100;
     let price = 0.01 * 10f64.powf(9.0); //0.01 ETH
     let in_days = Duration::days(30);
@@ -37,8 +37,8 @@ async fn create_event_test() {
 
     name.push_str(" ".repeat(50 - name.len()).as_str());
     let name = SizedAsciiString::<50>::new(name).unwrap();
-    description.push_str(" ".repeat(256 - description.len()).as_str());
-    let description = SizedAsciiString::<256>::new(description).unwrap();
+    description.push_str(" ".repeat(50 - description.len()).as_str());
+    let description = SizedAsciiString::<50>::new(description).unwrap();
 
     let deadline = Tai64::from_unix(Utc::now().checked_add_signed(in_days).unwrap().timestamp()).0;
 
