@@ -166,7 +166,7 @@ impl NFTTicketingContract for Contract {
             ticket_id,
             ticket_number: event.tickets_sold 
         });
-        ticket_id
+        return ticket_id;
     }
 
     #[storage(read, write)]
