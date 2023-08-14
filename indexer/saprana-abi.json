@@ -51,12 +51,12 @@
       "components": [
         {
           "name": "Address",
-          "type": 8,
+          "type": 7,
           "typeArguments": null
         },
         {
           "name": "ContractId",
-          "type": 11,
+          "type": 10,
           "typeArguments": null
         }
       ],
@@ -81,18 +81,12 @@
     },
     {
       "typeId": 6,
-      "type": "str[256]",
-      "components": null,
-      "typeParameters": null
-    },
-    {
-      "typeId": 7,
       "type": "str[50]",
       "components": null,
       "typeParameters": null
     },
     {
-      "typeId": 8,
+      "typeId": 7,
       "type": "struct Address",
       "components": [
         {
@@ -104,17 +98,17 @@
       "typeParameters": null
     },
     {
-      "typeId": 9,
+      "typeId": 8,
       "type": "struct BuyTicketLog",
       "components": [
         {
           "name": "event",
-          "type": 13,
+          "type": 12,
           "typeArguments": null
         },
         {
           "name": "timestamp",
-          "type": 15,
+          "type": 14,
           "typeArguments": null
         },
         {
@@ -124,12 +118,34 @@
         },
         {
           "name": "ticket_id",
-          "type": 15,
+          "type": 14,
           "typeArguments": null
         },
         {
           "name": "ticket_number",
-          "type": 15,
+          "type": 14,
+          "typeArguments": null
+        }
+      ],
+      "typeParameters": null
+    },
+    {
+      "typeId": 9,
+      "type": "struct ClaimLog",
+      "components": [
+        {
+          "name": "event",
+          "type": 12,
+          "typeArguments": null
+        },
+        {
+          "name": "timestamp",
+          "type": 14,
+          "typeArguments": null
+        },
+        {
+          "name": "amount",
+          "type": 14,
           "typeArguments": null
         }
       ],
@@ -137,28 +153,6 @@
     },
     {
       "typeId": 10,
-      "type": "struct ClaimLog",
-      "components": [
-        {
-          "name": "event",
-          "type": 13,
-          "typeArguments": null
-        },
-        {
-          "name": "timestamp",
-          "type": 15,
-          "typeArguments": null
-        },
-        {
-          "name": "amount",
-          "type": 15,
-          "typeArguments": null
-        }
-      ],
-      "typeParameters": null
-    },
-    {
-      "typeId": 11,
       "type": "struct ContractId",
       "components": [
         {
@@ -170,44 +164,44 @@
       "typeParameters": null
     },
     {
-      "typeId": 12,
+      "typeId": 11,
       "type": "struct CreateEventLog",
       "components": [
         {
           "name": "event",
-          "type": 13,
+          "type": 12,
           "typeArguments": null
         },
         {
           "name": "timestamp",
-          "type": 15,
+          "type": 14,
           "typeArguments": null
         },
         {
           "name": "payment",
-          "type": 15,
+          "type": 14,
           "typeArguments": null
         }
       ],
       "typeParameters": null
     },
     {
-      "typeId": 13,
+      "typeId": 12,
       "type": "struct Event",
       "components": [
         {
           "name": "id",
-          "type": 15,
+          "type": 14,
           "typeArguments": null
         },
         {
           "name": "owner",
-          "type": 8,
+          "type": 7,
           "typeArguments": null
         },
         {
           "name": "name",
-          "type": 7,
+          "type": 6,
           "typeArguments": null
         },
         {
@@ -217,34 +211,34 @@
         },
         {
           "name": "max_participantes",
-          "type": 15,
+          "type": 14,
           "typeArguments": null
         },
         {
           "name": "deadline",
-          "type": 15,
+          "type": 14,
           "typeArguments": null
         },
         {
           "name": "ticket_price",
-          "type": 15,
+          "type": 14,
           "typeArguments": null
         },
         {
           "name": "tickets_sold",
-          "type": 15,
+          "type": 14,
           "typeArguments": null
         },
         {
           "name": "balance",
-          "type": 15,
+          "type": 14,
           "typeArguments": null
         }
       ],
       "typeParameters": null
     },
     {
-      "typeId": 14,
+      "typeId": 13,
       "type": "struct MintEvent",
       "components": [
         {
@@ -254,14 +248,14 @@
         },
         {
           "name": "token_id",
-          "type": 15,
+          "type": 14,
           "typeArguments": null
         }
       ],
       "typeParameters": null
     },
     {
-      "typeId": 15,
+      "typeId": 14,
       "type": "u64",
       "components": null,
       "typeParameters": null
@@ -272,14 +266,14 @@
       "inputs": [
         {
           "name": "id",
-          "type": 15,
+          "type": 14,
           "typeArguments": null
         }
       ],
       "name": "buy_ticket",
       "output": {
         "name": "",
-        "type": 15,
+        "type": 14,
         "typeArguments": null
       },
       "attributes": [
@@ -300,14 +294,14 @@
       "inputs": [
         {
           "name": "id",
-          "type": 15,
+          "type": 14,
           "typeArguments": null
         }
       ],
       "name": "claim",
       "output": {
         "name": "",
-        "type": 15,
+        "type": 14,
         "typeArguments": null
       },
       "attributes": [
@@ -324,7 +318,7 @@
       "inputs": [
         {
           "name": "name",
-          "type": 7,
+          "type": 6,
           "typeArguments": null
         },
         {
@@ -334,24 +328,24 @@
         },
         {
           "name": "max_participantes",
-          "type": 15,
+          "type": 14,
           "typeArguments": null
         },
         {
           "name": "deadline",
-          "type": 15,
+          "type": 14,
           "typeArguments": null
         },
         {
           "name": "ticket_price",
-          "type": 15,
+          "type": 14,
           "typeArguments": null
         }
       ],
       "name": "create_event",
       "output": {
         "name": "",
-        "type": 15,
+        "type": 14,
         "typeArguments": null
       },
       "attributes": [
@@ -372,14 +366,14 @@
       "inputs": [
         {
           "name": "id",
-          "type": 15,
+          "type": 14,
           "typeArguments": null
         }
       ],
       "name": "get_event",
       "output": {
         "name": "",
-        "type": 13,
+        "type": 12,
         "typeArguments": null
       },
       "attributes": [
@@ -395,17 +389,17 @@
       "inputs": [
         {
           "name": "ticket_owner",
-          "type": 8,
+          "type": 7,
           "typeArguments": null
         },
         {
           "name": "event_id",
-          "type": 15,
+          "type": 14,
           "typeArguments": null
         },
         {
           "name": "token_id",
-          "type": 15,
+          "type": 14,
           "typeArguments": null
         }
       ],
@@ -454,7 +448,7 @@
       "logId": 3,
       "loggedType": {
         "name": "",
-        "type": 14,
+        "type": 13,
         "typeArguments": []
       }
     },
@@ -470,7 +464,7 @@
       "logId": 5,
       "loggedType": {
         "name": "",
-        "type": 9,
+        "type": 8,
         "typeArguments": []
       }
     },
@@ -486,7 +480,7 @@
       "logId": 7,
       "loggedType": {
         "name": "",
-        "type": 10,
+        "type": 9,
         "typeArguments": []
       }
     },
@@ -494,7 +488,7 @@
       "logId": 8,
       "loggedType": {
         "name": "",
-        "type": 12,
+        "type": 11,
         "typeArguments": []
       }
     }
@@ -505,19 +499,19 @@
       "name": "ADMIN",
       "configurableType": {
         "name": "",
-        "type": 8,
+        "type": 7,
         "typeArguments": []
       },
-      "offset": 14392
+      "offset": 14064
     },
     {
       "name": "PROTOCOL_OWNER_FEE",
       "configurableType": {
         "name": "",
-        "type": 15,
+        "type": 14,
         "typeArguments": null
       },
-      "offset": 14424
+      "offset": 14096
     }
   ]
 }
