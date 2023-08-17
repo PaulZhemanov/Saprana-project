@@ -9,7 +9,7 @@ use fuels::{
 abigen!(Contract(name = "DApp", abi = "out/debug/saprana-abi.json"));
 
 const RPC: &str = "beta-3.fuel.network";
-const CONTRACT_ADDRESS: &str = "0x6671422fbaa2a3e8d4c20f362c6dbacc3be2412c7ac38d02e36173045110257a";
+const CONTRACT_ADDRESS: &str = "0x248c0ee15d2d865de1c3ff767450c73646e17c1282f6025a0332b4c0193ac607";
 
 //admin - owner of contract
 //alice - event manager (creator of event)
@@ -17,7 +17,7 @@ const CONTRACT_ADDRESS: &str = "0x6671422fbaa2a3e8d4c20f362c6dbacc3be2412c7ac38d
 
 #[tokio::test]
 async fn buy_ticket_test() {
-    let event_id = 0;
+    let event_id = 2;
     dotenv().ok();
 
     let provider = Provider::connect(RPC).await.unwrap();
@@ -35,7 +35,7 @@ async fn buy_ticket_test() {
         .await
         .unwrap()
         .value;
-    println!("event = {:#?}", event);
+    println!("Pre-purchase event = {:#?}", event);
 
     let res = buyer_instance
         .methods()
@@ -47,5 +47,17 @@ async fn buy_ticket_test() {
         .await
         .unwrap();
 
-    println!("Ticket id = {:?}", res.value);
+    println!("Ticket purchased. Ticket id = {:?}", res.value);
+
+    let event = buyer_instance
+        .methods()
+        .get_event(event_id)
+        .simulate()
+        .await
+        .unwrap()
+        .value;
+    println!("Post-purchase event = {:#?}", event);
+
+    println!("Ticket purchased. Ticket id = {:?}", res.value);
+
 }
