@@ -7,7 +7,7 @@ graphql_schema: schema/indexer.schema.graphql
 module:
   wasm: target/wasm32-unknown-unknown/release/indexer.wasm
 metrics: ~
-contract_id: fuel1vec5yta6523734xzpumzcmd6esa7ysfv0tpc6qhrv9esg5gsy4aqtt8073
-start_block: 1845906
+contract_id: fuel1yjxqac2a9kr9mcwrlam8g5x8xerwzlqjstmqyksrx26vqxf6ccrs3cspcj
+start_block: 1872289
 end_block: ~
 resumable: true
